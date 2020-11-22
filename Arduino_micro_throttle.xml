@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DefaulftInput Primary="1">
+  <Version Num="1313" />
+  <Device DeviceName="Arduino Micro Throttle" GUID="00000000-0000-0000-0000-000000000001" ProductID="8037">
+    <Axes>
+      <Axis AxisName="X" AxisSensitivy="0" AxisDeadZone="0" />
+      <Axis AxisName="Y" AxisSensitivy="0" AxisDeadZone="0" />
+      <Axis AxisName="Z" AxisSensitivy="0" AxisDeadZone="0" />
+    </Axes>
+    <Context ContextName="PLANE">
+      <Action ActionName="KEY_THROTTLE_AXIS_SET_EX1" Flag="4">
+        <Primary>
+          <KEY Information="Axis X">1026</KEY>
+        </Primary>
+      </Action>
+      <Action ActionName="KEY_PROP_PITCH_AXIS_SET_EX1" Flag="4">
+        <Primary>
+          <KEY Information="Axis Y">1042</KEY>
+        </Primary>
+      </Action>
+      <Action ActionName="KEY_AXIS_MIXTURE_SET" Flag="4">
+        <Primary>
+          <KEY Information="Axis Z">1058</KEY>
+        </Primary>
+      </Action>
+    </Context>
+  </Device>
+</DefaulftInput>
