@@ -12,76 +12,62 @@
 
 #include "Joystick.h"
 
+#define MIXTURE A0
+#define TRIM_PITCH A3
+#define THROTTLE A2
+#define PROPELLER A1
+
 // Create Joystick
 // Joystick_ Joystick;
 Joystick_ Joystick(
   JOYSTICK_DEFAULT_REPORT_ID,     // Report ID           (JOYSTICK_DEFAULT_REPORT_ID)
-  JOYSTICK_TYPE_JOYSTICK,       // Joystick type       (JOYSTICK_TYPE_JOYSTICK)
+  JOYSTICK_TYPE_JOYSTICK,         // Joystick type       (JOYSTICK_TYPE_JOYSTICK)
   
-  0,                             // button count        (JOYSTICK_DEFAULT_BUTTON_COUNT)
+  0,                              // button count        (JOYSTICK_DEFAULT_BUTTON_COUNT)
   0,                              // hat switch count    (JOYSTICK_DEFAULT_HATSWITCH_COUNT)
 
-  true,                           // include X-Axis      (true)
-  true,                           // include Y-Axis      (true)
-  true,                          // include Z-Axis      (true)
+  false,                          // include X-Axis      (false)
+  false,                          // include Y-Axis      (false)
+  true,                           // include Z-Axis      (false)     MIXTURE
 
-  false,                          // include Rx-Axis     (true)
-  false,                          // include Ry-Axis     (true)
-  false,                          // include Rz+Axis     (true)
+  true,                           // include Rx-Axis     (false)     PROPELLER
+  true,                           // include Ry-Axis     (false)     TRIM_PITCH
+  false,                          // include Rz+Axis     (false)
   
-  false,                           // include rudder      (true)
-  false,                           // include throttle    (true)
+  false,                          // include rudder      (false)
+  true,                           // include throttle    (false)     THROTTLE
   
-  false,                          // include accelerator (true)
-  false,                          // include brake       (true)
-  false                           // include steering    (true)
+  false,                          // include accelerator (false)
+  false,                          // include brake       (false)
+  false                           // include steering    (false)
 );
 
 
 void setup() {
 
   // Set Range Values
-  Joystick.setXAxisRange(0, 1024);
-  Joystick.setYAxisRange(0, 1024);
-  Joystick.setZAxisRange(0, 1024);
-
-  // Joystick.setRxAxisRange(0, 360);
-  // Joystick.setRyAxisRange(360, 0);
-  // Joystick.setRzAxisRange(0, 720);
-
-  // Joystick.setRudderRange(0, 1024);
-  // Joystick.setThrottleRange(0, 1024);
-  // Joystick.setAcceleratorRange(0, 1024);
-  
-  // Joystick.setBrakeRange(-127, 127);
-  // Joystick.setSteeringRange(-127, 127);
+  Joystick.setRyAxisRange(0, 1024);       // TRIM_PITCH
+  Joystick.setZAxisRange(0, 1024);        // MIXTURE
+  Joystick.setThrottleRange(0, 1024);     // THROTTLE
+  Joystick.setRxAxisRange(0, 1024);       // PROPELLER
     
   
   Joystick.begin(false);
 
-  Joystick.setXAxis(0);
-  Joystick.setYAxis(0);
-  Joystick.setZAxis(0);
-
-  // Joystick.setRxAxis(180);
-  // Joystick.setRyAxis(180);
-  // Joystick.setRzAxis(360);
-
-  // Joystick.setRudder(512);
-  // Joystick.setThrottle(512);
-  // Joystick.setAccelerator(512);
-  
-  // Joystick.setBrake(0);
-  // Joystick.setSteering(0);
+  Joystick.setRyAxis(512); // TRIM_PITCH
+  Joystick.setZAxis(0);    // MIXTURE
+  Joystick.setThrottle(0); // THROTTLE
+  Joystick.setRxAxis(0);   // PROPELLER
 
   Joystick.sendState();
 }
 
 void loop() {
-
-  Joystick.setXAxis(analogRead(A0));
-  Joystick.setYAxis(analogRead(A1));
-  Joystick.setZAxis(analogRead(A2));
+ 
+  Joystick.setRyAxis(analogRead(TRIM_PITCH));         // TRIM_PITCH
+  Joystick.setZAxis(1024 - analogRead(MIXTURE));      // MIXTURE
+  Joystick.setThrottle(1024 - analogRead(THROTTLE));  // THROTTLE
+  Joystick.setRxAxis(1024 - analogRead(PROPELLER));   // PROPELLER
   
 
   Joystick.sendState();
